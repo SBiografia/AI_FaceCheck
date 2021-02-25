@@ -89,14 +89,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			<h1 class="title">인공지능 동물상 테스트(남자)</h1>
 			<h2 class="subtitle">나는 어떤 동물과 닮았을까?</h2>
 		</section>
-		<section class="youtube">
-			<div class="youtube-cover container d-flex flex-row-reverse">
-				<a href="" class="youtube-link">By 조코딩</a>
-				<img src="" alt="" class="youtube-icon" />
-			</div>
-		</section>
+		
 
-		<div id="webcam-container"></div>
+		
 
 		<script
 			class="jsbin"
@@ -120,16 +115,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				<div id="label-container"></div>
 
 				<!-- Go to www.addthis.com/dashboard to customize your tools -->
-				<div class="addthis_inline_share_toolbox"></div>
+				<div class="addthis_inline_share_toolbox mt-3"></div>
 
-				<div class="image-title-wrap">
+				<div class="image-title-wrap mt-3 mb-3">
 					<button type="button" onclick="removeUpload()" class="remove-image">
-						Remove <span class="image-title">Uploaded Image</span>
+						Remove Image
 					</button>
 				</div>
 			</div>
 		</div>
-
+		
+		<section class="youtube">
+			<div class="youtube-cover container d-flex flex-row-reverse">
+				<a href="" class="youtube-link">By 조코딩 유튜브</a>
+				<img src="" alt="" class="youtube-icon" />
+			</div>
+		</section>
+		
 		<div id="disqus_thread"></div>
 		<script>
 			/**
@@ -265,8 +267,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 						$('.file-upload-image').attr('src', e.target.result);
 						$('.file-upload-content').show();
-
-						$('.image-title').html(input.files[0].name);
 					};
 
 					reader.readAsDataURL(input.files[0]);
