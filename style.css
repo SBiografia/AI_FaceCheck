@@ -163,6 +163,12 @@ body {
 	text-decoration : underline;
 }
 
+.adContainer{
+	width : 320px;
+	
+	margin : 0 auto;
+}
+
 
 @media screen and (max-width : 600px){
 	html,body{
