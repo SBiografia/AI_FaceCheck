@@ -121,7 +121,11 @@
 				</div>
 			</div>
 			<div class="file-upload-content">
-				<img class="file-upload-image" id="face_image" src="#" alt="your image" />
+				<div class="uploadImgContainer">
+					<img class="file-upload-image" id="face_image" src="#" alt="your image" />
+					<img class="result_image" src ="#"/>
+				</div>
+				
 				<p class="result_message"></p>
 				<div id="label-container"></div>
 				<!-- LODING 중일 때 SPINNER 빙글빙글 -->
@@ -156,12 +160,7 @@
 			</div>
 		</div>
 
-		<section class="youtube">
-			<div class="youtube-cover container d-flex flex-row-reverse">
-				<a href="" class="youtube-link">By 조코딩 유튜브</a>
-				<img src="" alt="" class="youtube-icon" />
-			</div>
-		</section>
+		
 		<div class="adContainer ad_bottom">
 			<ins
 				class="kakao_ad_area"
@@ -177,7 +176,12 @@
 			></script>
 		</div>
 		<div id="disqus_thread"></div>
-		
+		<section class="youtube">
+			<div class="youtube-cover container d-flex flex-row-reverse">
+				<a href="" class="youtube-link">조코딩 유튜브에서 배웠어요!</a>
+				<img src="" alt="" class="youtube-icon" />
+			</div>
+		</section>
 		
 		
 		<script>
@@ -199,10 +203,9 @@
 				(d.head || d.body).appendChild(s);
 			})();
 		</script>
-		<noscript
-			>Please enable JavaScript to view the
-			<a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript
-		>
+		
+		<noscript>Please enable JavaScript to view the
+			<a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 		<!-- Optional JavaScript; choose one of the two! -->
 
 		<!-- Option 1: Bootstrap Bundle with Popper -->
@@ -274,37 +277,71 @@
 				const prediction = await model.predict(imgSource, false);
 				prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 				console.log(prediction[0].className);
-				let resultMessage;
+				let resultMessage, resultImage;
 				switch (prediction[0].className) {
 					case 'DOG':
 						resultMessage = '강아지상';
+						resultImage = "img/DOG.jpg";
 						console.log('강아지상');
 						break;
 					case 'BEAR':
 						resultMessage = '곰상';
+						resultImage = "img/BEAR.jpg";
 						console.log('곰상');
 						break;
 					case 'CAT':
 						resultMessage = '고양이상';
+						resultImage = "img/CAT.jpg";
 						break;
 					case 'DINOSAUR':
 						resultMessage = '공룡상';
+						resultImage = "img/DINOSAUR.jpg";
 						break;
 					case 'RABBIT':
 						resultMessage = '토끼상';
+						resultImage = "img/RABBIT.jpg";
 						break;
 					default:
 						resultMessage = '알수없음';
+						resultImage = "";
 						break;
 				}
 				$('.result_message').html(resultMessage);
+				$('.result_image').attr("src",resultImage);
+				$('.result_image').show();
 				console.log("spinner hide");
-					$('.spinnerContainer').hide();
+				$('.spinnerContainer').hide();
 				$('.shareContainer').show();
+				
 				for (let i = 0; i < maxPredictions; i++) {
-					const classPrediction =
-						prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
-					labelContainer.childNodes[i].innerHTML = classPrediction;
+					// const classPrediction =
+					// 	prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
+					// labelContainer.childNodes[i].innerHTML = classPrediction;
+					labelContainer.childNodes[i].classList.add("d-flex");
+					labelContainer.childNodes[i].classList.add("align-items-center");
+					labelContainer.childNodes[i].classList.add("justify-content-end");
+					labelContainer.childNodes[i].appendChild(document.createElement('div'));
+					labelContainer.childNodes[i].appendChild(document.createElement('div'));
+					labelContainer.childNodes[i].appendChild(document.createElement('div'));
+					// labelContainer.childNodes[i].childNodes[2].classList.add("ms-auto");
+					labelContainer.childNodes[i].childNodes[2].classList.add("progress");
+					labelContainer.childNodes[i].childNodes[2].appendChild(document.createElement('div'));
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].classList.add("progress-bar");
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].role = "progressbar";
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute("aria-valuemin","0");
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute("aria-valuemax","100");
+					
+		
+					percentOfResult = Number(prediction[i].probability.toFixed(2)) * 100;
+					labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;
+					labelContainer.childNodes[i].childNodes[1].innerHTML = "&nbsp:&nbsp";
+					
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].style.width = `${percentOfResult}%`;
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute("aria-valuenow",percentOfResult);
+					
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].innerHTML = String(percentOfResult) + "%";
+					
+					
 					
 				}
 			}
@@ -313,8 +350,9 @@
 			function readURL(input) {
 				if (input.files && input.files[0]) {
 					console.log("spinner show");
-						$('.spinnerContainer').show();
+					$('.spinnerContainer').show();
 					$('.shareContainer').hide();
+					$('.result_image').hide();
 					var reader = new FileReader();
 
 					reader.onload = function (e) {
