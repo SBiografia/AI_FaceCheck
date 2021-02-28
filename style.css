@@ -172,11 +172,26 @@ body {
 .genderToggleContainer{
 	transform : scale(0.5);
 }
+.genderToggleContainer .gender_click{
+  font-size: 1.5rem;
+  z-index : 1;
+  text-decoration: blink;
+	animation-name: blinker;
+	animation-duration: 0.6s;
+	animation-iteration-count:infinite;
+	animation-timing-function:ease-in-out;
+	animation-direction: alternate;
+}
+
+@keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
 .genderToggleContainer input {
   display: none;
 }
 
-.genderToggleContainer label {
+.genderToggleContainer .knobLabel {
   cursor: pointer;
   display: inline-block;
   width: 82px;
@@ -224,29 +239,29 @@ body {
   left: -12px;
 }
 
-.genderToggleContainer input:checked + label > .knob {
+.genderToggleContainer input:checked + .knobLabel > .knob {
   box-shadow: 0 0 0 8px #a1c6dd inset;
   background-color: #e2ecf4;
   transform: rotate(-140deg);
 	/*translateX(98px) */
 }
 
-.genderToggleContainer input:checked + label > .knob > i {
+.genderToggleContainer input:checked + .knobLabel > .knob > i {
   background-color: #a1c6dd;
 }
 
-.genderToggleContainer input:checked + label > .knob > i:after,
-.genderToggleContainer input:checked + label > .knob > i:before {
+.genderToggleContainer input:checked + .knobLabel > .knob > i:after,
+.genderToggleContainer input:checked + .knobLabel > .knob > i:before {
   background-color: #a1c6dd;
 }
 
-.genderToggleContainer input:checked + label > .knob > i:after {
+.genderToggleContainer input:checked + .knobLabel > .knob > i:after {
   top: 29px;
   width: 24px;
   left: -14px;
   transform: rotate(45deg);
 }
-.genderToggleContainer input:checked + label > .knob > i:before {
+.genderToggleContainer input:checked + .knobLabel > .knob > i:before {
   top: 26px;
   width: 24px;
   left: 0px;
