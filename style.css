@@ -54,7 +54,6 @@ body {
 }
 
 .image-upload-wrap {
-  margin-top: 20px;
   border: 4px dashed #1FB264;
   position: relative;
 }
@@ -169,6 +168,94 @@ body {
 	
 	margin : 0 auto;
 }
+
+.genderToggleContainer{
+	transform : scale(0.5);
+}
+.genderToggleContainer input {
+  display: none;
+}
+
+.genderToggleContainer label {
+  cursor: pointer;
+  display: inline-block;
+  width: 82px;
+  height: 82px;
+  box-shadow: 0 0 0 8px #e5e9ea inset;
+  border-radius: 60px;
+  position: relative;
+}
+
+.genderToggleContainer .knob {
+  position: absolute;
+  width: 82px;
+  top: 0;
+  left: 0;
+  height: 82px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px #f470a7 inset;
+  background-color: #fbd4e6;
+  transition: 0.3s;
+}
+
+.genderToggleContainer .knob > i {
+  position: absolute;
+  width: 8px;
+  height: 36px;
+  top: 100%;
+  background-color: #f470a7;
+  left: calc(50% - 4px);
+}
+
+.genderToggleContainer .knob > i:before,
+.genderToggleContainer .knob > i:after {
+  width: 12px;
+  position: absolute;
+  top: 42%;
+  content: "";
+  height: 8px;
+  background-color: #f470a7;
+}
+
+.genderToggleContainer .knob > i:before {
+  left: 8px;
+}
+.genderToggleContainer .knob > i:after {
+  left: -12px;
+}
+
+.genderToggleContainer input:checked + label > .knob {
+  box-shadow: 0 0 0 8px #a1c6dd inset;
+  background-color: #e2ecf4;
+  transform: rotate(-140deg);
+	/*translateX(98px) */
+}
+
+.genderToggleContainer input:checked + label > .knob > i {
+  background-color: #a1c6dd;
+}
+
+.genderToggleContainer input:checked + label > .knob > i:after,
+.genderToggleContainer input:checked + label > .knob > i:before {
+  background-color: #a1c6dd;
+}
+
+.genderToggleContainer input:checked + label > .knob > i:after {
+  top: 29px;
+  width: 24px;
+  left: -14px;
+  transform: rotate(45deg);
+}
+.genderToggleContainer input:checked + label > .knob > i:before {
+  top: 26px;
+  width: 24px;
+  left: 0px;
+  transform: rotate(134deg);
+}
+
+
+
+
 
 #label-container{
 	max-width : 70vw;
