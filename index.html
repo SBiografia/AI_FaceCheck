@@ -4,19 +4,29 @@
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>닮은 얼굴 찾기</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	
+	<meta name="title" content="닮은 연예인 찾기">
+    <meta name="subject" content="AI가 찾아주는 날 닮은 연예인! 날 닮은 연예인이 누구일지 찾아보세요.">
+    <meta name="keywords" content="테스트, 인공지능 테스트, 얼굴상, 얼굴상 테스트, 나와 닮은 연예인, 2000년대 연예인, 2000년대 탑스타, 2000년대 스타, 00년대 스타, 날 닮은 톱스타, 연예인 찾기, AI 얼굴상">
+    <meta name="author" content="SBiografia">
+	<meta property="og:url" content="https://youlooklike.netlify.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="닮은 연예인 찾기" />
+    <meta property="og:description" content="인공지능이 얼굴사진으로 날 닮은 연예인을 찾아주는 테스트, 나와 닮은 연예인을 찾아보세요! 00년대(2000~2010) 날 닮은 톱스타들의 사진 데이터로 학습한 인공지능이 나의 얼굴사진으로 내가 그 시절 어떤 연예인과 닮았는지 찾아드립니다. 회원가입도 필요없이 화면에서 바로 확인해보세요! 사진 데이터는 그 어디에도 전송되지 않습니다. 얼굴상 테스트를 통해 나와 닮은 연예인 찾기를 할 수 있습니다."/>
+	<meta property="og:image" content="img/face_selfie.jpg" />
+    
+	<title>닮은 연예인 찾기</title>
+	
 	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
-	<link rel="stylesheet" href="style.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+	<!-- favicon icon -->
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
-	<script src="https://kit.fontawesome.com/b85fd553ce.js" crossorigin="anonymous"></script>
-
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script>
-
+	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-P8YWE7M2Z8"></script>
 	<script>
@@ -25,9 +35,11 @@
 			dataLayer.push(arguments);
 		}
 		gtag('js', new Date());
-
 		gtag('config', 'G-P8YWE7M2Z8');
 	</script>
+
+	<link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
@@ -39,7 +51,7 @@
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light nav-distance">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">동물상 테스트</a>
+			<a class="navbar-brand" href="#">닮은 연예인 찾기 테스트</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
 				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -50,10 +62,10 @@
 						<a class="nav-link active" aria-current="page" href="#">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Features</a>
+						<a class="nav-link" href="#">00</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Pricing</a>
+						<a class="nav-link" href="#">00</a>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -61,9 +73,9 @@
 							Dropdown link
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<li><a class="dropdown-item" href="#">Action</a></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
-							<li><a class="dropdown-item" href="#">Something else here</a></li>
+							<li><a class="dropdown-item" href="#">00</a></li>
+							<li><a class="dropdown-item" href="#">00</a></li>
+							<li><a class="dropdown-item" href="#">00</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -74,10 +86,11 @@
 	<section class="section d-flex justify-content-center align-items-center">
 		<div class="titleContainer">
 			<h1 class="title">
-				<span>인공지능 동물상 테스트</span>
+				<span>인공지능 얼굴 감별사</span>
 				<span class="title_gender">(여자)</span>
 			</h1>
-			<h2 class="subtitle">나는 어떤 동물과 닮았을까?</h2>
+			<h2 class="subtitle">내가 닮은 그 시절 톱스타는 누구일까?</h2>
+			<h3 class="subtitle">2000년대(00~10)</h3>
 		</div>
 		<div class="genderToggleContainer">
 			<label for="gender" class="gender_click position-absolute top-50 start-50 translate-middle">Click</label>
@@ -147,6 +160,8 @@
 		</div>
 	</section>
 
+	
+
 	<script>
 		//gender 버튼
 		document.getElementById("gender").addEventListener("click",function(){ 
@@ -203,18 +218,18 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
 	<script type="text/javascript">
+//		https://teachablemachine.withgoogle.com/models/ZxZo-oU1_/
+
 		// More API functions here:
 		// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
 		// the link to your model provided by Teachable Machine export panel
-		const URL = 'https://teachablemachine.withgoogle.com/models/WX9Eu7uma/';
+		const URL = "https://teachablemachine.withgoogle.com/models/ZxZo-oU1_/";
 
 		let model, webcam, labelContainer, maxPredictions;
 
 		// Load the image model and setup the webcam
 		async function init() {
-
-
 			const modelURL = URL + 'model.json';
 			const metadataURL = URL + 'metadata.json';
 
@@ -225,16 +240,7 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
 			model = await tmImage.load(modelURL, metadataURL);
 			maxPredictions = model.getTotalClasses();
 
-			//웹캠을 사용하니까 loop 돌리는건데 이미지는 필요없음.
-			// Convenience function to setup a webcam
-			// const flip = true; // whether to flip the webcam
-			// webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-			// await webcam.setup(); // request access to the webcam
-			// await webcam.play();
-			// window.requestAnimationFrame(loop);
-
 			// append elements to the DOM
-			//document.getElementById('webcam-container').appendChild(webcam.canvas);
 			labelContainer = document.getElementById('label-container');
 
 			for (let i = 0; i < maxPredictions; i++) {
@@ -243,43 +249,28 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
 			}
 		}
 
-		//웹캠을 사용하니까 loop 돌리는건데 이미지는 필요없음.
-		// async function loop() {
-		//     webcam.update(); // update the webcam frame
-		//     await predict();
-		//     window.requestAnimationFrame(loop);
-		// }
-
-		// run the webcam image through the image model
+		
 		async function predict() {
-			// predict can take in an image, video or canvas html element
-			//const prediction = await model.predict(webcam.canvas);
 			var imgSource = document.getElementById('face_image');
 			const prediction = await model.predict(imgSource, false);
 			prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 			console.log(prediction[0].className);
 			let resultMessage, resultImage;
+
 			switch (prediction[0].className) {
 				case 'DOG':
-					resultMessage = '강아지상';
 					resultImage = 'img/DOG.jpg';
-					console.log('강아지상');
 					break;
 				case 'BEAR':
-					resultMessage = '곰상';
-					resultImage = 'img/BEAR.jpg';
-					console.log('곰상');
+					resultImage = 'img/BEAR.jpg'	;
 					break;
 				case 'CAT':
-					resultMessage = '고양이상';
 					resultImage = 'img/CAT.jpg';
 					break;
 				case 'DINOSAUR':
-					resultMessage = '공룡상';
 					resultImage = 'img/DINOSAUR.jpg';
 					break;
 				case 'RABBIT':
-					resultMessage = '토끼상';
 					resultImage = 'img/RABBIT.jpg';
 					break;
 				default:
@@ -287,38 +278,53 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
 					resultImage = '';
 					break;
 			}
-			$('.result_message').html(resultMessage);
+			$('.result_message').html(prediction[0].className);
 			$('.result_image').attr('src', resultImage);
 			$('.result_image').show();
 			console.log('spinner hide');
 			$('.spinnerContainer').hide();
 			$('.shareContainer').show();
 
+			let etcName ="그 외 : ";
+			let cntClass = 0;
 			for (let i = 0; i < maxPredictions; i++) {
 				// const classPrediction =
 				// 	prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
 				// labelContainer.childNodes[i].innerHTML = classPrediction;
-				labelContainer.childNodes[i].classList.add('d-flex');
-				labelContainer.childNodes[i].classList.add('align-items-center');
-				labelContainer.childNodes[i].classList.add('justify-content-end');
-				labelContainer.childNodes[i].appendChild(document.createElement('div'));
-				labelContainer.childNodes[i].appendChild(document.createElement('div'));
-				labelContainer.childNodes[i].appendChild(document.createElement('div'));
-				
-				labelContainer.childNodes[i].childNodes[2].classList.add('progress');
-				labelContainer.childNodes[i].childNodes[2].appendChild(document.createElement('div'));
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].classList.add('progress-bar');
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].role = 'progressbar';
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemin','0');
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemax','100');
-
 				percentOfResult =Math.floor(Number(prediction[i].probability.toFixed(2)) * 100 * 10) / 10;
-				labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;
-				labelContainer.childNodes[i].childNodes[1].innerHTML = '&nbsp:&nbsp';
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].style.width = `${percentOfResult}%`;
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuenow',percentOfResult);
-				labelContainer.childNodes[i].childNodes[2].childNodes[0].innerHTML =String(percentOfResult) + '%';
+				
+				if(percentOfResult > 10){
+					cntClass = cntClass + 1;
+					labelContainer.childNodes[i].classList.add('d-flex');
+					labelContainer.childNodes[i].classList.add('align-items-center');
+					labelContainer.childNodes[i].classList.add('justify-content-end');
+					labelContainer.childNodes[i].appendChild(document.createElement('div')); // 이름 
+					labelContainer.childNodes[i].appendChild(document.createElement('div')); // 띄워쓰기
+					labelContainer.childNodes[i].appendChild(document.createElement('div')); // 퍼센트
+					
+					labelContainer.childNodes[i].childNodes[2].classList.add('progress');
+					labelContainer.childNodes[i].childNodes[2].appendChild(document.createElement('div'));
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].classList.add('progress-bar');
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].role = 'progressbar';
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemin','0');
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemax','100');
+
+					
+					labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;
+					labelContainer.childNodes[i].childNodes[1].innerHTML = '&nbsp:&nbsp';
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].style.width = `${percentOfResult}%`;
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuenow',percentOfResult);
+					labelContainer.childNodes[i].childNodes[2].childNodes[0].innerHTML =String(percentOfResult) + '%';
 				}
+				else if (percentOfResult >0 ){
+					etcName = etcName + `${prediction[i].className}(${percentOfResult}%), `;
+				}
+			}
+			
+			console.log(etcName)
+			etcName = etcName.substr(0, etcName.length-2);
+			console.log(`after slice ${etcName}`)
+			labelContainer.childNodes[cntClass].innerHTML = etcName
 		}
 	</script>
 	<script>
@@ -365,6 +371,10 @@ this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your pag
 			$('.image-upload-wrap').removeClass('image-dropping');
 		});
 	</script>
+	<script>
+		console.log("start init()")
+		init();
+	</script>
 </body>
 
 <!-- 	
@@ -388,3 +398,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -->
 
 </html>
+
+<!--
+
+
+
+-->

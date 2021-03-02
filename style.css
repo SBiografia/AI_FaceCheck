@@ -201,6 +201,28 @@ body {
   position: relative;
 }
 
+@keyframes jumpMale {
+  0% {
+    transform: rotate(-140deg) scale(1);
+    /* box-shadow: 0 1px 2px rgba(0,0,0,.15); */
+  }
+  100% {
+    transform: rotate(-140deg) scale(1.05);
+    /* box-shadow: 0 4px 20px rgba(0,0,0,.1); */
+  }
+}
+@keyframes jumpFemale {
+  0% {
+    transform: scale(1);
+    /* box-shadow: 0 1px 2px rgba(0,0,0,.15); */
+  }
+  100% {
+    transform: scale(1.05);
+    /* box-shadow: 0 4px 20px rgba(0,0,0,.1); */
+  }
+}
+
+
 .genderToggleContainer .knob {
   position: absolute;
   width: 82px;
@@ -211,6 +233,8 @@ body {
   box-shadow: 0 0 0 8px #f470a7 inset;
   background-color: #fbd4e6;
   transition: 0.3s;
+  animation: .4s jumpFemale ease infinite alternate; 
+  
 }
 
 .genderToggleContainer .knob > i {
@@ -243,6 +267,7 @@ body {
   box-shadow: 0 0 0 8px #a1c6dd inset;
   background-color: #e2ecf4;
   transform: rotate(-140deg);
+  animation: .4s jumpMale ease infinite alternate; 
 	/*translateX(98px) */
 }
 
