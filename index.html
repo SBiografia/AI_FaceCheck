@@ -19,17 +19,25 @@
 		content="인공지능이 얼굴사진으로 날 닮은 연예인을 찾아주는 테스트, 나와 닮은 연예인을 찾아보세요! 00년대(2000~2010) 날 닮은 톱스타들의 사진 데이터로 학습한 인공지능이 나의 얼굴사진으로 내가 그 시절 어떤 연예인과 닮았는지 찾아드립니다. 회원가입도 필요없이 화면에서 바로 확인해보세요! 사진 데이터는 그 어디에도 전송되지 않습니다. 얼굴상 테스트를 통해 나와 닮은 연예인 찾기를 할 수 있습니다." />
 	<meta property="og:image" content="img/face_selfie.jpg" />
 
+
+	<script defer src="face-api.min.js"></script>
+	<!-- <script src="face-api.js"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+	<script defer src="face_check.js"></script>
+
+
 	<title>닮은 연예인 찾기</title>
-	<script src="config.js"></script>
+	
+	
 	<!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
 	<!-- favicon icon -->
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
-	<!-- Go to www.addthis.com/dashboard to customize your tools -->
-	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script>
-
+	<!-- share icon -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -44,15 +52,17 @@
 	</script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script>
-		console.log(config.KAKAO_API);
-        Kakao.init(config.KAKAO_API); // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+		Kakao.init('cc775bdd46f9155b972374882e5f43fe'); // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 		console.log(Kakao.isInitialized()); // SDK 초기화 여부를 판단합니다.
-    </script>
+	</script>
+	<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<link rel="stylesheet" href="style.css" />
 
 </head>
 
+
 <body>
+
 	<!-- NAV BAR from bootstrap -->
 	<div class="adContainer add_top">
 		<ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-BRkISGbh1P6FxjRM" data-ad-width="320"
@@ -93,6 +103,7 @@
 		</div>
 	</nav>
 
+
 	<section class="section d-flex justify-content-center align-items-center">
 		<div class="titleContainer">
 			<h1 class="title">
@@ -109,22 +120,20 @@
 				<span class="knob"><i></i></span>
 			</label>
 		</div>
-
-
 	</section>
 
 
-
-
-	<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	
 	<div class="file-upload">
 		<div class="image-upload-wrap">
-			<input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" />
+			<!---  input에 들어오면  onchange="readURL(this);" 이걸 실행시켜주는건데 일단 facedetect를 위해 빼줌 -->
+			<input id="file-upload-input" type="file" accept="image/*" />
 			<div class="drag-text">
-				<h3>Drag and drop a file or select add Image</h3>
+				<!-- <h3 class="uploadMessage">Drag and drop a file or select add Image</h3> -->
+				<h3 class="uploadMessage">누굴 닮고 싶은지 3초만 생각하며 기다려주세요. <br> AI 머신 준비 중!!</h3>
 			</div>
 		</div>
-		<div class="file-upload-content">
+		<div class="file-upload-content hidden">
 			<div class="uploadImgContainer">
 				<img class="file-upload-image" id="face_image" src="#" alt="your image" />
 				<img class="result_image" src="#" />
@@ -135,7 +144,7 @@
 			<!-- LODING 중일 때 SPINNER 빙글빙글 -->
 			<div class="spinnerContainer">
 				<div class="d-flex flex-column justify-content-center align-items-center">
-					<strong>Loading...</strong>
+					<strong>Loading....</strong>
 					<div class="d-flex justify-content-center">
 						<div class="spinner-border" style="width: 2rem; height: 2rem;" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -145,87 +154,90 @@
 			</div>
 
 
+			<div class="shareContainer01">
+				<div class="share-dialog">
+					<header>
+						<h3 class="dialog-title">닮은 연예인 찾기 공유하기!</h3>
+						<button class="close-button"><svg>
+								<use href="#close"></use>
+							</svg></button>
+					</header>
+					<div class="targets">
 
-	<div class="shareContainer01">
-		<div class="share-dialog">
-			<header>
-				<h3 class="dialog-title">닮은 연예인 찾기 공유하기!</h3>
-				<button class="close-button"><svg>
-						<use href="#close"></use>
-					</svg></button>
-			</header>
-			<div class="targets">
-				
-				<a class="button" href="javascript:;" id="kakao-link">
-					<!-- <img src ="img/kakaotalk-seeklogo.com.svg" alt=""> -->
-					<div class="kakao">
-						<svg class="font">
-							<use href="#kakaotalk"></use>
-						</svg>
-						<svg>
-							<use href="#kakaotalk2"></use>
-						</svg>
+						<a class="button" href="javascript:;" id="kakao-link">
+							<!-- <img src ="img/kakaotalk-seeklogo.com.svg" alt=""> -->
+							<div class="kakao">
+								<svg class="font">
+									<use href="#kakaotalk"></use>
+								</svg>
+								<svg>
+									<use href="#kakaotalk2"></use>
+								</svg>
+							</div>
+							<span>KakaoTalk</span>
+						</a>
+
+						<div class="button link-copy">
+							<!-- <div class="pen-url">https</div> -->
+							링크 복사하기
+						</div>
+
+						<a class="button"
+							href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fyoulooklike.netlify.app%2F">
+							<svg>
+								<use href="#facebook"></use>
+							</svg>
+							<span>Facebook</span>
+						</a>
+
+						<a class="button"
+							href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyoulooklike.netlify.app%2F">
+							<svg>
+								<use href="#twitter"></use>
+							</svg>
+							<span>Twitter</span>
+						</a>
 					</div>
-					<span>KakaoTalk</span>
-				</a>
 
-				<div class="button link-copy">
-					<!-- <div class="pen-url">https</div> -->
-					링크 복사하기
 				</div>
 
-				<a class="button" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fyoulooklike.netlify.app%2F">
+				<button class="share-button" type="button" title="Share this article">
 					<svg>
-						<use href="#facebook"></use>
+						<use href="#share-icon"></use>
 					</svg>
-					<span>Facebook</span>
-				</a>
+					<span>공유하기</span>
+				</button>
 
-				<a class="button" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyoulooklike.netlify.app%2F">
-					<svg>
-						<use href="#twitter"></use>
-					</svg>
-					<span>Twitter</span>
-				</a>
+
 			</div>
-
-		</div>
-
-		<button class="share-button" type="button" title="Share this article">
-			<svg>
-				<use href="#share-icon"></use>
-			</svg>
-			<span>공유하기</span>
-		</button>
-
-		
-	</div>
 
 
 			<!-- Go to www.addthis.com/dashboard to customize your tools -->
 			<!-- 
-				<div class="shareContainer">
-				<div class="addthis_inline_share_toolbox mt-3"></div>
-			</div> 
-		-->
+						<div class="shareContainer">
+						<div class="addthis_inline_share_toolbox mt-3"></div>
+					</div> 
+				-->
 
 
 			<div class="image-title-wrap mt-3 mb-3">
-				<button type="button" onclick="removeUpload()" class="remove-image">
+				<button type="button" class="remove-image">
 					Remove Image
 				</button>
 			</div>
 		</div>
 	</div>
 
-
-
 	<div class="adContainer ad_bottom">
 		<ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-89Le9LFSWQdcZanW" data-ad-width="320"
 			data-ad-height="100"></ins>
 		<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 	</div>
+
+	<!-------------------------- 댓글 창 ------------------------->
 	<div id="disqus_thread"></div>
+
+
 	<section class="youtube">
 		<div class="youtube-cover container d-flex flex-row-reverse">
 			<a href="" class="youtube-link">조코딩 유튜브에서 배웠어요!</a>
@@ -233,8 +245,6 @@
 		</div>
 	</section>
 
-
-	
 	<svg class="hidden" xmlns="http://www.w3.org/2000/svg">
 		<defs>
 			<symbol id="kakaotalk" viewBox="0 0 1792 1664" fill="#FEE500" stroke="#FEE500" stroke-width="2"
@@ -280,289 +290,102 @@
 		</defs>
 	</svg>
 
-
-
 	<script src="share.js"></script>
 
 	<script type="text/javascript">
-		
 		Kakao.Link.createDefaultButton({
 			container: '#kakao-link',
 			objectType: 'feed',
 			content: {
-			  title: '닮은 연예인 찾기',
-			  description: '내가 닮은 2000년대 연예인은 과연 누구?!',
-			  imageUrl:
-				'https://images.unsplash.com/photo-1514582086679-4024becf927e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-			  link: {
-				mobileWebUrl: 'https://youlooklike.netlify.app',
-				androidExecParams: 'test',
-			  },
+				title: '닮은 연예인 찾기',
+				description: '내가 닮은 2000년대 연예인은 과연 누구?!',
+				imageUrl:
+					'https://images.unsplash.com/photo-1514582086679-4024becf927e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+				link: {
+					mobileWebUrl: 'https://youlooklike.netlify.app',
+					androidExecParams: 'test',
+				},
 			},
 			social: {
-			  likeCount: 10,
-			  commentCount: 20,
-			  sharedCount: 30,
+				likeCount: 10,
+				commentCount: 20,
+				sharedCount: 30,
 			},
 			buttons: [
-			  {
-				title: '웹으로 이동',
-				link: {
-				  mobileWebUrl: 'https://youlooklike.netlify.app',
+				{
+					title: '웹으로 이동',
+					link: {
+						mobileWebUrl: 'https://youlooklike.netlify.app',
+					},
 				},
-			  },
 			]
-		  });
-	  </script> 
-<!-- 
-
-{
-				title: '앱으로 이동',
-				link: {
-				  mobileWebUrl: 'https://developers.kakao.com',
-				},
-			  },
-
- -->
-
-
-
-
-	<script>
-		//gender 버튼
-		document.getElementById("gender").addEventListener("click", function () {
-			if (document.getElementById("gender").checked) {
-
-				document.querySelector(".title_gender").innerHTML = "(남자)";
-			}
-			else {
-
-				document.querySelector(".title_gender").innerHTML = "(여자)";
-			}
-
-		})
-
-
-
-
+		});
 	</script>
-	<script>
-			/**
-			 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-			 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-			/*
-	var disqus_config = function () {
-	this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-	this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	};
-	*/
-			(function () {
-				// DON'T EDIT BELOW THIS LINE
-				var d = document,
-					s = d.createElement('script');
-				s.src = 'https://sbiografia.disqus.com/embed.js';
-				s.setAttribute('data-timestamp', +new Date());
-				(d.head || d.body).appendChild(s);
-			})();
-	</script>
-
-	<noscript>Please enable JavaScript to view the
-		<a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-	<!-- Optional JavaScript; choose one of the two! -->
-
 	<!-- Option 1: Bootstrap Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
-	<!-- Option 2: Separate Popper and Bootstrap JS -->
-	<!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-    -->
-
-	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-	<script type="text/javascript">
-		//		https://teachablemachine.withgoogle.com/models/ZxZo-oU1_/
-
-		// More API functions here:
-		// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-
-		// the link to your model provided by Teachable Machine export panel
-		const URL = "https://teachablemachine.withgoogle.com/models/m2qEzLdSR/";
-
-		let model, webcam, labelContainer, maxPredictions;
-
-		// Load the image model and setup the webcam
-		async function init() {
-			const modelURL = URL + 'model.json';
-			const metadataURL = URL + 'metadata.json';
-
-			// load the model and metadata
-			// Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-			// or files from your local hard drive
-			// Note: the pose library adds "tmImage" object to your window (window.tmImage)
-			model = await tmImage.load(modelURL, metadataURL);
-			maxPredictions = model.getTotalClasses();
-
-			// append elements to the DOM
-			labelContainer = document.getElementById('label-container');
-
-			for (let i = 0; i < maxPredictions; i++) {
-				// and class labels
-				labelContainer.appendChild(document.createElement('div'));
-			}
-		}
+	<!-- 
+		Option 2: Separate Popper and Bootstrap JS 
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+	-->
 
 
-		async function predict() {
-			var imgSource = document.getElementById('face_image');
-			const prediction = await model.predict(imgSource, false);
-			prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
-			console.log(prediction[0].className);
-			let resultMessage, resultImage;
+    <script>
+        //gender 버튼
+        document.getElementById("gender").addEventListener("click", function () {
+            if (document.getElementById("gender").checked) {
 
-			switch (prediction[0].className) {
-				case 'DOG':
-					resultImage = 'img/DOG.jpg';
-					break;
-				case 'BEAR':
-					resultImage = 'img/BEAR.jpg';
-					break;
-				case 'CAT':
-					resultImage = 'img/CAT.jpg';
-					break;
-				case 'DINOSAUR':
-					resultImage = 'img/DINOSAUR.jpg';
-					break;
-				case 'RABBIT':
-					resultImage = 'img/RABBIT.jpg';
-					break;
-				default:
-					resultMessage = '알수없음';
-					resultImage = '';
-					break;
-			}
-			$('.result_message').html(prediction[0].className);
-			$('.result_image').attr('src', resultImage);
-			$('.result_image').show();
-			console.log('spinner hide');
-			$('.spinnerContainer').hide();
-			<!-- $('.shareContainer').show(); -->
-			$('.shareContainer01').show();
+                document.querySelector(".title_gender").innerHTML = "(남자)";
+            }
+            else {
 
-			let etcName = "그 외 : ";
-			let cntClass = 0;
-			for (let i = 0; i < maxPredictions; i++) {
-				// const classPrediction =
-				// 	prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
-				// labelContainer.childNodes[i].innerHTML = classPrediction;
-				percentOfResult = Math.floor(Number(prediction[i].probability.toFixed(2)) * 100 * 10) / 10;
+                document.querySelector(".title_gender").innerHTML = "(여자)";
+            }
 
-				if (percentOfResult > 10) {
-					cntClass = cntClass + 1;
-					labelContainer.childNodes[i].classList.add('d-flex');
-					labelContainer.childNodes[i].classList.add('align-items-center');
-					labelContainer.childNodes[i].classList.add('justify-content-end');
-					labelContainer.childNodes[i].appendChild(document.createElement('div')); // 이름 
-					labelContainer.childNodes[i].appendChild(document.createElement('div')); // 띄워쓰기
-					labelContainer.childNodes[i].appendChild(document.createElement('div')); // 퍼센트
-
-					labelContainer.childNodes[i].childNodes[2].classList.add('progress');
-					labelContainer.childNodes[i].childNodes[2].appendChild(document.createElement('div'));
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].classList.add('progress-bar');
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].role = 'progressbar';
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemin', '0');
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemax', '100');
+        })
 
 
-					labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;
-					labelContainer.childNodes[i].childNodes[1].innerHTML = '&nbsp:&nbsp';
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].style.width = `${percentOfResult}%`;
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuenow', percentOfResult);
-					labelContainer.childNodes[i].childNodes[2].childNodes[0].innerHTML = String(percentOfResult) + '%';
-				}
-				else if (percentOfResult > 0) {
-					etcName = etcName + `${prediction[i].className}(${percentOfResult}%), `;
-				}
-			}
 
-			console.log(etcName)
-			etcName = etcName.substr(0, etcName.length - 2);
-			console.log(`after slice ${etcName}`)
-			labelContainer.childNodes[cntClass].innerHTML = etcName
-		}
-	</script>
-	<script>
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				console.log('spinner show');
-				$('.spinnerContainer').show();
-				<!-- $('.shareContainer').hide(); -->
-				$('.shareContainer01').hide();
-				$('.result_image').hide();
-				var reader = new FileReader();
 
-				reader.onload = function (e) {
-					$('.image-upload-wrap').hide();
-					$('.file-upload-image').attr('src', e.target.result);
-					$('.file-upload-content').show();
-				};
+    </script>
+    
+    <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+            /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+            (function () {
+                // DON'T EDIT BELOW THIS LINE
+                var d = document,
+                    s = d.createElement('script');
+                s.src = 'https://sbiografia.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+    </script>
 
-				reader.readAsDataURL(input.files[0]);
-				init().then(() => {
-					console.log('Start predict');
-					predict();
-				});
-				//predict();
-			} else {
-				removeUpload();
-			}
-		}
-
-		function removeUpload() {
-			$('.file-upload-input').replaceWith($('.file-upload-input').clone());
-			$('.file-upload-content').hide();
-			$('.image-upload-wrap').show();
-			$('.result_message').html('');
-			if (labelContainer.childNodes.length !== 0) {
-				while (labelContainer.childNodes[0]) {
-					labelContainer.removeChild(labelContainer.lastChild);
-				}
-			}
-		}
-		$('.image-upload-wrap').bind('dragover', function () {
-			$('.image-upload-wrap').addClass('image-dropping');
-		});
-		$('.image-upload-wrap').bind('dragleave', function () {
-			$('.image-upload-wrap').removeClass('image-dropping');
-		});
-	</script>
-	<script>
-		console.log("start init()")
-		init();
-	</script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        
+	<!-- Go to www.addthis.com/dashboard to customize your tools -->
+	<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script> -->
 </body>
 
 <!-- 	
 Copyright (c) 2021 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
-	
-	Copyright (c) 2021 by Mert Cukuren (https://codepen.io/knyttneve/pen/bPpEZY)
-
+Copyright (c) 2021 by Mert Cukuren (https://codepen.io/knyttneve/pen/bPpEZY)
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 -->
 
 </html>

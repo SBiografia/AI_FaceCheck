@@ -38,11 +38,11 @@ body {
 }
 
 .file-upload-content {
-  display: none;
+  /* display: none; */
   text-align: center;
 }
 
-.file-upload-input {
+#file-upload-input {
   position: absolute;
   margin: 0;
   padding: 0;
@@ -309,7 +309,9 @@ body {
 
 
 .hidden {
-  display: none;
+  /* display: none; */
+  display: none !important;
+  visibility: hidden !important;
 }
 
 
