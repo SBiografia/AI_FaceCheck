@@ -6,7 +6,10 @@
 
 
 // the link to your model provided by Teachable Machine export panel
-const URL = "https://teachablemachine.withgoogle.com/models/m2qEzLdSR/";
+//COLOR version
+// const URL = "https://teachablemachine.withgoogle.com/models/m2qEzLdSR/";
+//GRAYSCALE version
+const URL = "https://teachablemachine.withgoogle.com/models/omHcioYXc/";
 
 const imageUpload = document.getElementById('file-upload-input')
 const resultMessage = document.querySelector('.result_message'),
@@ -30,7 +33,7 @@ const MODEL_URL = 'models/'
 let ttImg = document.getElementById('resizeFace');
 
 Promise.all([
-    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+    // faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
     faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
     faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL)
 ]).then(startFaceDetect)
@@ -60,7 +63,7 @@ async function startFaceDetect() {
             image = await faceapi.bufferToImage(imageUpload.files[0])
             const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
             // console.log(detections);
-            
+            console.log("asfasfasfsf")
 
             img = new Image();
             img.setAttribute("src", cropCanvas.toDataURL());
@@ -110,7 +113,7 @@ async function startFaceDetect() {
 
 }
 async function TMinit() {
-    
+    console.log("start TMinit")
     const modelURL = URL + 'model.json';
     const metadataURL = URL + 'metadata.json';
     loadingPercent.innerHTML = 'Loading...(3/5)'
@@ -131,10 +134,17 @@ async function TMinit() {
 }
 
 
+
 async function predict() {
     loadingPercent.innerHTML = 'Loading...(5/5)'
-    var imgSource = document.getElementById('face_image');
-    const prediction = await model.predict(imgSource, false);
+    // var imgSource = document.getElementById('face_image');
+    grayImg =  fileUploadImage.cloneNode(true);
+    grayImg.classList.add('grayscale')
+    fileUploadContent.appendChild(grayImg);
+    console.log(grayImg);
+    console.dir(grayImg)
+    // const prediction = await model.predict(imgSource, false);
+    const prediction = await model.predict(grayImg, false);
     prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
     console.log(prediction[0].className);
     let tempMessage, tempImg;
@@ -233,6 +243,8 @@ function init() {
         imageUploadWrap.classList.remove('image-dropping');
     });
     removeBtn.addEventListener('click', removeUpload);
+
+    TMinit();
 
 }
 init()

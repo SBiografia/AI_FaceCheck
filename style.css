@@ -2,7 +2,9 @@ body {
   font-family: sans-serif;
   background-color: #ffffff;
 }
-
+.grayscale{
+  filter: grayscale();
+}
 .file-upload {
   background-color: #ffffff;
   width: 100%;
