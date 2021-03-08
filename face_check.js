@@ -21,6 +21,7 @@ const imageUploadWrap = document.querySelector('.image-upload-wrap'),
     fileUploadContent = document.querySelector('.file-upload-content');
 const removeBtn = document.querySelector('.remove-image');
 const loadingPercent = spinnerContainer.querySelector('strong');
+const selectYear = document.querySelector('.selectYear');
 
 let model, labelContainer, maxPredictions;
 const MODEL_URL = 'models/'
@@ -233,6 +234,22 @@ function removeUpload() {
         }
     }
 }
+function changeYear(e){
+
+    switch(e.target.selectedIndex){
+        case 0:
+            console.log(e.target.options[e.target.selectedIndex].text)
+            break;
+        case 1:
+            console.log(e.target.options[e.target.selectedIndex].text)
+            break;
+        case 2:
+            console.log(e.target.options[e.target.selectedIndex].text)
+            break;
+            
+    }
+
+}
 
 
 function init() {
@@ -245,7 +262,7 @@ function init() {
     removeBtn.addEventListener('click', removeUpload);
 
     TMinit();
-
+    selectYear.addEventListener('change',changeYear);
 }
 init()
 

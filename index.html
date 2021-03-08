@@ -53,7 +53,9 @@
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script>
 		Kakao.init('cc775bdd46f9155b972374882e5f43fe'); // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-		console.log(Kakao.isInitialized()); // SDK 초기화 여부를 판단합니다.
+		// SDK 초기화 여부를 판단합니다.
+		//console.log(Kakao.isInitialized()); 
+
 	</script>
 	<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<link rel="stylesheet" href="style.css" />
@@ -103,16 +105,16 @@
 		</div>
 	</nav>
 
-
-	<section class="section d-flex justify-content-center align-items-center">
-		<div class="titleContainer">
+	<section class = "section d-flex flex-column justify-content-center align-items-center">
+	<div class="titleContainer d-flex justify-content-center align-items-center">
+		<div>
 			<h1 class="title">
 				<span>인공지능 얼굴 감별사</span>
 				<span class="title_gender">(여자)</span>
 			</h1>
 			<h2 class="subtitle">내가 닮은 그 시절 톱스타는 누구일까?</h2>
-			<h3 class="subtitle">2000년대(00~10)</h3>
 		</div>
+
 		<div class="genderToggleContainer">
 			<label for="gender" class="gender_click position-absolute top-50 start-50 translate-middle">Click</label>
 			<input type="checkbox" id="gender">
@@ -120,6 +122,14 @@
 				<span class="knob"><i></i></span>
 			</label>
 		</div>
+	</div>
+	<div class="custom-dropdown">
+		<select class="selectYear">    
+			<option>1990년대(1990~2000)_준비중</option>
+			<option selected>2000년대(2000~2010)</option>
+			<option>2010년대(2010~2020)_준비중</option>
+		</select>
+	</div>
 	</section>
 
 
@@ -386,6 +396,12 @@ Copyright (c) 2021 by Mert Cukuren (https://codepen.io/knyttneve/pen/bPpEZY)
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Copyright (c) 2021 by Silver Drop (https://codepen.io/silverdrop/pen/msrcE)
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 -->
 
 </html>
