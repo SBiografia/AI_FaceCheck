@@ -245,7 +245,24 @@
 	</div>
 
 	<!-------------------------- 댓글 창 ------------------------->
-	<div id="disqus_thread"></div>
+	<!--<div id="disqus_thread"></div>-->
+	<!-- 라이브리 시티 설치 코드 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81MjkyMS8yOTM5OA==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+</div>
+<!-- 시티 설치 코드 끝 -->
 
 
 	<section class="youtube">
@@ -370,6 +387,7 @@
     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     */
+	/*
             (function () {
                 // DON'T EDIT BELOW THIS LINE
                 var d = document,
@@ -378,9 +396,10 @@
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
             })();
+			*/
     </script>
 
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
         
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script> -->
