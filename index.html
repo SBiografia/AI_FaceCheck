@@ -29,8 +29,8 @@
 
 
 	<title>닮은 연예인 찾기</title>
-	
-	
+
+
 	<!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
@@ -58,6 +58,7 @@
 
 	</script>
 	<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="https://ads-partners.coupang.com/g.js"></script>
 	<link rel="stylesheet" href="style.css" />
 
 </head>
@@ -105,35 +106,36 @@
 		</div>
 	</nav>
 
-	<section class = "section d-flex flex-column justify-content-center align-items-center">
-	<div class="titleContainer d-flex justify-content-center align-items-center">
-		<div>
-			<h1 class="title">
-				<span>인공지능 얼굴 감별사</span>
-				<span class="title_gender">(여자)</span>
-			</h1>
-			<h2 class="subtitle">내가 닮은 그 시절 톱스타는 누구일까?</h2>
-		</div>
+	<section class="section d-flex flex-column justify-content-center align-items-center">
+		<div class="titleContainer d-flex justify-content-center align-items-center">
+			<div>
+				<h1 class="title">
+					<span>인공지능 얼굴 감별사</span>
+					<span class="title_gender">(여자)</span>
+				</h1>
+				<h2 class="subtitle">내가 닮은 그 시절 톱스타는 누구일까?</h2>
+			</div>
 
-		<div class="genderToggleContainer">
-			<label for="gender" class="gender_click position-absolute top-50 start-50 translate-middle">Click</label>
-			<input type="checkbox" id="gender">
-			<label for="gender" class="knobLabel">
-				<span class="knob"><i></i></span>
-			</label>
+			<div class="genderToggleContainer">
+				<label for="gender"
+					class="gender_click position-absolute top-50 start-50 translate-middle">Click</label>
+				<input type="checkbox" id="gender">
+				<label for="gender" class="knobLabel">
+					<span class="knob"><i></i></span>
+				</label>
+			</div>
 		</div>
-	</div>
-	<div class="custom-dropdown">
-		<select class="selectYear">    
-			<option>1990년대(1990~2000)_준비중</option>
-			<option selected>2000년대(2000~2010)</option>
-			<option>2010년대(2010~2020)_준비중</option>
-		</select>
-	</div>
+		<div class="custom-dropdown">
+			<select class="selectYear">
+				<option>1990년대(1990~2000)_준비중</option>
+				<option selected>2000년대(2000~2010)</option>
+				<option>2010년대(2010~2020)_준비중</option>
+			</select>
+		</div>
 	</section>
 
 
-	
+
 	<div class="file-upload">
 		<div class="image-upload-wrap">
 			<!---  input에 들어오면  onchange="readURL(this);" 이걸 실행시켜주는건데 일단 facedetect를 위해 빼줌 -->
@@ -237,41 +239,41 @@
 			</div>
 		</div>
 	</div>
+	<div class="adContainer">
 
-
-	<script src="https://ads-partners.coupang.com/g.js"></script>
-<script>
-	new PartnersCoupang.G({"id":454814,"template":"carousel","trackingCode":"AF7764685","width":"680","height":"140"});
-</script>
+		<script>
+			new PartnersCoupang.G({ "id": 454814, "template": "carousel", "trackingCode": "AF7764685", "width": "100%", "height": "7%" });
+		</script>
+	</div>
 
 
 
 	<!-------------------------- 댓글 창 ------------------------->
 	<!--<div id="disqus_thread"></div>-->
 	<!-- 라이브리 시티 설치 코드 -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC81MjkyMS8yOTM5OA==">
-	<script type="text/javascript">
-   (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
+	<div id="lv-container" data-id="city" data-uid="MTAyMC81MjkyMS8yOTM5OA==">
+		<script type="text/javascript">
+			(function (d, s) {
+				var j, e = d.getElementsByTagName(s)[0];
 
-       if (typeof LivereTower === 'function') { return; }
+				if (typeof LivereTower === 'function') { return; }
 
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
+				j = d.createElement(s);
+				j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+				j.async = true;
 
-       e.parentNode.insertBefore(j, e);
-   })(document, 'script');
-	</script>
-</div>
-<!-- 시티 설치 코드 끝 -->
+				e.parentNode.insertBefore(j, e);
+			})(document, 'script');
+		</script>
+	</div>
+	<!-- 시티 설치 코드 끝 -->
 
 
-<div class="adContainer ad_bottom">
-	<ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-89Le9LFSWQdcZanW" data-ad-width="320"
-		data-ad-height="100"></ins>
-	<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-</div>
+	<div class="adContainer ad_bottom">
+		<ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-89Le9LFSWQdcZanW" data-ad-width="320"
+			data-ad-height="100"></ins>
+		<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+	</div>
 
 	<section class="youtube">
 		<div class="youtube-cover container d-flex flex-row-reverse">
@@ -357,7 +359,9 @@
 		});
 	</script>
 	<!-- Option 1: Bootstrap Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+		crossorigin="anonymous"></script>
 
 	<!-- 
 		Option 2: Separate Popper and Bootstrap JS 
@@ -366,49 +370,49 @@
 	-->
 
 
-    <script>
-        //gender 버튼
-        document.getElementById("gender").addEventListener("click", function () {
-            if (document.getElementById("gender").checked) {
+	<script>
+		//gender 버튼
+		document.getElementById("gender").addEventListener("click", function () {
+			if (document.getElementById("gender").checked) {
 
-                document.querySelector(".title_gender").innerHTML = "(남자)";
-            }
-            else {
+				document.querySelector(".title_gender").innerHTML = "(남자)";
+			}
+			else {
 
-                document.querySelector(".title_gender").innerHTML = "(여자)";
-            }
+				document.querySelector(".title_gender").innerHTML = "(여자)";
+			}
 
-        })
-
-
+		})
 
 
-    </script>
-    
-    <script>
-            /**
-             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-            /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-	/*
-            (function () {
-                // DON'T EDIT BELOW THIS LINE
-                var d = document,
-                    s = d.createElement('script');
-                s.src = 'https://sbiografia.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-			*/
-    </script>
 
-    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
-        
+
+	</script>
+
+	<script>
+		/**
+		 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+		 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+		/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+		/*
+				(function () {
+					// DON'T EDIT BELOW THIS LINE
+					var d = document,
+						s = d.createElement('script');
+					s.src = 'https://sbiografia.disqus.com/embed.js';
+					s.setAttribute('data-timestamp', +new Date());
+					(d.head || d.body).appendChild(s);
+				})();
+				*/
+	</script>
+
+	<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script> -->
 </body>
