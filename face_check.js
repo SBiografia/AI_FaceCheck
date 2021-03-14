@@ -8,10 +8,15 @@
 // the link to your model provided by Teachable Machine export panel
 //COLOR version
 // const URL = "https://teachablemachine.withgoogle.com/models/m2qEzLdSR/";
+
+// BTS
+const URL = "https://teachablemachine.withgoogle.com/models/GA80Zcpil/"
+
 //GRAYSCALE version
-const URL = "https://teachablemachine.withgoogle.com/models/omHcioYXc/";
+//const URL = "https://teachablemachine.withgoogle.com/models/omHcioYXc/";
 
 const imageUpload = document.getElementById('file-upload-input')
+const labelContainer = document.getElementById('label-container')
 const resultMessage = document.querySelector('.result_message'),
     resultImage = document.querySelector('.result_image'),
     spinnerContainer = document.querySelector('.spinnerContainer'),
@@ -23,7 +28,9 @@ const removeBtn = document.querySelector('.remove-image');
 const loadingPercent = spinnerContainer.querySelector('strong');
 const selectYear = document.querySelector('.selectYear');
 
-let model, labelContainer, maxPredictions;
+
+
+let model, maxPredictions;
 const MODEL_URL = 'models/'
 /*****************
  * 1. startFaceDetect 로 input에 입력받은 사진에서 얼굴만 추출해서 따로 이미지 파일을 만들어 줌.
@@ -126,7 +133,7 @@ async function TMinit() {
     maxPredictions = model.getTotalClasses();
     
     // append elements to the DOM
-    labelContainer = document.getElementById('label-container');
+    
     loadingPercent.innerHTML = 'Loading...(4/5)'
     for (let i = 0; i < maxPredictions; i++) {
         // and class labels
@@ -141,37 +148,16 @@ async function predict() {
     // var imgSource = document.getElementById('face_image');
     grayImg =  fileUploadImage.cloneNode(true);
     grayImg.classList.add('grayscale')
-    fileUploadContent.appendChild(grayImg);
-    console.log(grayImg);
-    console.dir(grayImg)
+    // fileUploadContent.appendChild(grayImg);
+    // console.log(grayImg);
+    // console.dir(grayImg)
     // const prediction = await model.predict(imgSource, false);
     const prediction = await model.predict(grayImg, false);
     prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
-    console.log(prediction[0].className);
+    console.log("prediction is",prediction[0].className);
     let tempMessage, tempImg;
 
     
-    switch (prediction[0].className) {
-        case 'DOG':
-            tempImg = 'img/DOG.jpg';
-            break;
-        case 'BEAR':
-            tempImg = 'img/BEAR.jpg';
-            break;
-        case 'CAT':
-            tempImg = 'img/CAT.jpg';
-            break;
-        case 'DINOSAUR':
-            tempImg = 'img/DINOSAUR.jpg';
-            break;
-        case 'RABBIT':
-            tempImg = 'img/RABBIT.jpg';
-            break;
-        default:
-            tempMessage = '알수없음';
-            tempImg = '';
-            break;
-    }
     resultMessage.innerHTML = prediction[0].className
     resultImage.src = tempImg;
     spinnerContainer.classList.add("hidden");
@@ -261,8 +247,11 @@ function init() {
     });
     removeBtn.addEventListener('click', removeUpload);
 
-    TMinit();
-    selectYear.addEventListener('change',changeYear);
+    // TMinit();
+    //selectYear.addEventListener('change',changeYear);
+
+
+
 }
 init()
 
