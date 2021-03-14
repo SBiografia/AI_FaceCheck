@@ -198,14 +198,33 @@ select::-ms-expand {
   padding: 60px 0;
 }
 
+.processImgContainer,
+.processImg,
 .file-upload-image,
 .result_image{
-  height : 15vw;
-  width : 15vw;
-  max-height: 18vw;
-  max-width: 18vw;
+  height : 20vw;
+  width : 20vw;
+  max-height: 22vw;
+  max-width: 22vw;
   margin: auto;
   padding: 5px;
+}
+.result_title{
+  margin-top: 20px;
+  font-size : 3rem;
+  font-weight : bold;
+}
+.result_message{
+  font-size: 2rem;
+}
+.processImgContainer{
+  display:inline-block;
+  position: relative;
+}
+.processImg{
+  position :absolute;
+  left:0;
+  top:0;
 }
 
 .remove-image {
@@ -548,10 +567,18 @@ select::-ms-expand {
 
 #label-container{
 	max-width : 70vw;
-	margin : 0 auto;
+	margin : 0 10vw 0 auto;
+  font-size: 2rem;
 }
 #label-container .progress{
 	width : 55vw;
+  height : 2rem;
+}
+#label-container .progress-bar{
+	font-size: 2rem;
+}
+.label{
+  width: 60vw;
 }
 
 
@@ -565,4 +592,13 @@ select::-ms-expand {
 	.navbar-brand{
 		font-size : 2rem;
 	}
+  #label-container{
+    font-size : 1.5rem;
+  }
+  #label-container .progress-bar{
+    font-size: 1.5rem;
+  }
+  .label{
+    width: 73vw;
+  }
 }

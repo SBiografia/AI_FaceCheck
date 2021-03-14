@@ -95,7 +95,7 @@
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light nav-distance">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">닮은 연예인 찾기 테스트</a>
+			<a class="navbar-brand" href="#" style="font-size:2rem;">닮은 연예인 찾기 테스트</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
 				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -172,11 +172,20 @@
 			</div>
 		</div>
 		<div class="file-upload-content hidden">
-			<div class="uploadImgContainer">
-				<img class="file-upload-image" id="face_image" src="#" alt="your image" />
+			<div class="uploadImgContainer d-flex">
+				<img class="file-upload-image" id="face_image" src="#"/>
+				<div class="processImgContainer">
+					<img class="processImg processImgOrigin" src="#">
+					<img class="processImg processImgResult" src="#">
+				</div>
+				<div class="processImgContainer">
+					<img class="processImg processImgOrigin" src="#">
+					<img class="processImg processImgResult" src="#">
+				</div>
 				<img class="result_image" src="#" />
 			</div>
 
+			<p class="result_title"></p>
 			<p class="result_message"></p>
 			<div id="label-container"></div>
 			<!-- LODING 중일 때 SPINNER 빙글빙글 -->

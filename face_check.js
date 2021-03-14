@@ -17,7 +17,8 @@ const URL = "https://teachablemachine.withgoogle.com/models/GA80Zcpil/"
 
 const imageUpload = document.getElementById('file-upload-input')
 const labelContainer = document.getElementById('label-container')
-const resultMessage = document.querySelector('.result_message'),
+const resultTitle = document.querySelector('.result_title'),
+    resultMessage = document.querySelector('.result_message'),
     resultImage = document.querySelector('.result_image'),
     spinnerContainer = document.querySelector('.spinnerContainer'),
     shareContainer01 = document.querySelector('.shareContainer01');
@@ -28,6 +29,8 @@ const removeBtn = document.querySelector('.remove-image');
 const loadingPercent = spinnerContainer.querySelector('strong');
 const selectYear = document.querySelector('.selectYear');
 
+const     processImgOrigin = document.querySelectorAll('.processImgOrigin'),
+        processImgResult = document.querySelectorAll('.processImgResult');
 
 
 let model, maxPredictions;
@@ -46,62 +49,90 @@ Promise.all([
     faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL)
 ]).then(startFaceDetect)
 
-
-async function startFaceDetect() {
+async function faceDetect(){
     let image;
-    let cropCanvas = document.createElement('canvas');
-    console.log(loadingPercent)
-    // document.body.append('ready to face')
-    document.querySelector('.uploadMessage').innerHTML = "Drag and drop a file or select add Image";
-
-
-    imageUpload.addEventListener('change', async () => {
+        let cropCanvas = document.createElement('canvas');
+        console.log("start image upload")
         if (imageUpload.files && imageUpload.files[0]) {
 
             spinnerContainer.classList.remove("hidden");
             shareContainer01.classList.add("hidden");
+
+            processImgOrigin[0].classList.add("hidden");
+            processImgResult[0].classList.add("hidden");
+            processImgOrigin[1].classList.add("hidden");
+            processImgResult[1].classList.add("hidden");
             resultImage.classList.add("hidden");
 
-            fileUploadContent.classList.remove("hidden");
+            
             imageUploadWrap.classList.add("hidden");
 
-            
+
             loadingPercent.innerHTML = 'Loading...(1/5)'
-            console.dir(imageUpload);
+            
+
             image = await faceapi.bufferToImage(imageUpload.files[0])
             const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
-            // console.log(detections);
-            console.log("asfasfasfsf")
+            loadingPercent.innerHTML = 'Loading...(2/5)'
+            fileUploadContent.classList.remove("hidden");
 
             img = new Image();
             img.setAttribute("src", cropCanvas.toDataURL());
             if (detections.length === 1) {
                 console.log("1개의 얼굴이 나왔습니다!!")
-                loadingPercent.innerHTML = 'Loading...(2/5)'
                 
+
                 const box = detections[0].detection.box
 
-                //1. image : 이미지/캔버스의 요소등을 생성한 (이미지)객체.
-                const sx = Math.ceil(box.x), //2. sx : (그려지는 좌표아님!) 크롭할 영역의 시작 x좌표.
-                    sy = Math.ceil(box.y),  //3. sy : (그려지는 좌표아님!) 크롭할 영역의 시작 y좌표.
-                    sWidth = Math.ceil(box.width),  // 4. sWidth : (그려지는 좌표아님!) 크롭할 영역의 넓이.
-                    sHeight = Math.ceil(box.height),    // 5. sHeight : (그려지는 좌표아님!) 크롭할 영역의 높이.
-                    dx = 0,// 6. dx : 크롭된 이미지가 그려질 영역의 x좌표. 
-                    dy = 0,// 7. dy : 크롭된 이미지가 그려질 영역의 y좌표.
-                    dWidth = Math.ceil(box.width),  // 8. dWidth : 크롭된 이미지의 넓이(확대/축소가 가능합니다). 위의 sWidth와 같으면 1:1 비율.
-                    dHeight = Math.ceil(box.height);    // 9. dHeight : 크롭된 이미지의 높이(확대/축소가 가능합니다). 위의 sHidth와 같으면 1:1 비율.
+                //정사각형으로 만들꺼임!!
+
+                let boxSize = 0;
+                let boxSizeOrigin = 0; //0은 width , 1은 height
+                let gap = 0;
+                if (box.width > box.height) {
+                    boxSize = Math.ceil(box.width);
+                    boxSizeOrigin = 0;
+                    gap = Math.ceil(box.width - box.height)
+                }
+                else {
+                    boxSize = Math.ceil(box.height);
+                    boxSizeOrigin = 1;
+                    gap = Math.ceil(box.height - box.width)
+                }
+
+                // //1. image : 이미지/캔버스의 요소등을 생성한 (이미지)객체.
+                // const sx = Math.ceil(box.x), //2. sx : (그려지는 좌표아님!) 크롭할 영역의 시작 x좌표.
+                //     sy = Math.ceil(box.y),  //3. sy : (그려지는 좌표아님!) 크롭할 영역의 시작 y좌표.
+                //     sWidth = Math.ceil(box.width),  // 4. sWidth : (그려지는 좌표아님!) 크롭할 영역의 넓이.
+                //     sHeight = Math.ceil(box.height),    // 5. sHeight : (그려지는 좌표아님!) 크롭할 영역의 높이.
+                //     dx = 0,// 6. dx : 크롭된 이미지가 그려질 영역의 x좌표. 
+                //     dy = 0,// 7. dy : 크롭된 이미지가 그려질 영역의 y좌표.
+                //     dWidth = Math.ceil(box.width),  // 8. dWidth : 크롭된 이미지의 넓이(확대/축소가 가능합니다). 위의 sWidth와 같으면 1:1 비율.
+                //     dHeight = Math.ceil(box.height);    // 9. dHeight : 크롭된 이미지의 높이(확대/축소가 가능합니다). 위의 sHidth와 같으면 1:1 비율.
+
+
+                const sx = boxSizeOrigin === 0 ? Math.ceil(box.x) : Math.ceil(box.x) - gap / 2,
+                    sy = boxSizeOrigin === 0 ? Math.ceil(box.y) - gap / 2 : Math.ceil(box.y),
+                    sWidth = boxSize,
+                    sHeight = boxSize,
+                    dx = 0,
+                    dy = 0,
+                    dWidth = boxSize,
+                    dHeight = boxSize;
 
                 cropCanvas.width = sWidth;
                 cropCanvas.height = sHeight;
+
+
+
                 var ctx = cropCanvas.getContext("2d");
 
                 img.onload = async function () {
-                    
+
                     await ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
                     fileUploadImage.src = cropCanvas.toDataURL("image/jpeg");
                     /***********얘네를 어디다가 놔둬야 할까....********* */
                     TMinit().then(() => {
-                        console.log('Start predict');
                         predict();
                     });
                     /***********얘네를 어디다가 놔둬야 할까....********* */
@@ -109,19 +140,134 @@ async function startFaceDetect() {
             }
             else if (detections.length === 0) {
                 console.log("얼굴이 없습니다ㅜㅜ")
+                resultTitle.classList.remove('hidden')
+                resultTitle.innerHTML='사진에서 얼굴을 찾을 수 없습니다ㅜㅜ'
             }
             else if (detections.length > 1) {
                 console.log("얼굴이 너무 많아엽!! 한명만 찍어주세요!")
+                resultTitle.classList.remove('hidden')
+                resultTitle.innerHTML='사진에 얼굴이 너무 많습니다.<br>한 명의 얼굴만 등록해주세요!'
             }
         }
         else {
             removeUpload();
         }
-    })
+}
+
+async function startFaceDetect() {
+    
+    
+    // document.body.append('ready to face')
+    document.querySelector('.uploadMessage').innerHTML = "드래그 & 드롭으로 파일을 옮기거나<br>클릭해서 이미지를 선택해주세요!";
+
+    imageUpload.addEventListener('change',faceDetect);
+
+    // imageUpload.addEventListener('change', async () => {
+    //     let image;
+    //     let cropCanvas = document.createElement('canvas');
+    //     console.log("start image upload")
+    //     if (imageUpload.files && imageUpload.files[0]) {
+
+    //         spinnerContainer.classList.remove("hidden");
+    //         shareContainer01.classList.add("hidden");
+
+    //         processImgOrigin[0].classList.add("hidden");
+    //         processImgResult[0].classList.add("hidden");
+    //         processImgOrigin[1].classList.add("hidden");
+    //         processImgResult[1].classList.add("hidden");
+    //         resultImage.classList.add("hidden");
+
+    //         fileUploadContent.classList.remove("hidden");
+    //         imageUploadWrap.classList.add("hidden");
+
+
+    //         loadingPercent.innerHTML = 'Loading...(1/5)'
+            
+
+    //         image = await faceapi.bufferToImage(imageUpload.files[0])
+    //         const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
+    //         loadingPercent.innerHTML = 'Loading...(2/5)'
+
+    //         img = new Image();
+    //         img.setAttribute("src", cropCanvas.toDataURL());
+    //         if (detections.length === 1) {
+    //             console.log("1개의 얼굴이 나왔습니다!!")
+                
+
+    //             const box = detections[0].detection.box
+
+    //             //정사각형으로 만들꺼임!!
+
+    //             let boxSize = 0;
+    //             let boxSizeOrigin = 0; //0은 width , 1은 height
+    //             let gap = 0;
+    //             if (box.width > box.height) {
+    //                 boxSize = Math.ceil(box.width);
+    //                 boxSizeOrigin = 0;
+    //                 gap = Math.ceil(box.width - box.height)
+    //             }
+    //             else {
+    //                 boxSize = Math.ceil(box.height);
+    //                 boxSizeOrigin = 1;
+    //                 gap = Math.ceil(box.height - box.width)
+    //             }
+
+    //             // //1. image : 이미지/캔버스의 요소등을 생성한 (이미지)객체.
+    //             // const sx = Math.ceil(box.x), //2. sx : (그려지는 좌표아님!) 크롭할 영역의 시작 x좌표.
+    //             //     sy = Math.ceil(box.y),  //3. sy : (그려지는 좌표아님!) 크롭할 영역의 시작 y좌표.
+    //             //     sWidth = Math.ceil(box.width),  // 4. sWidth : (그려지는 좌표아님!) 크롭할 영역의 넓이.
+    //             //     sHeight = Math.ceil(box.height),    // 5. sHeight : (그려지는 좌표아님!) 크롭할 영역의 높이.
+    //             //     dx = 0,// 6. dx : 크롭된 이미지가 그려질 영역의 x좌표. 
+    //             //     dy = 0,// 7. dy : 크롭된 이미지가 그려질 영역의 y좌표.
+    //             //     dWidth = Math.ceil(box.width),  // 8. dWidth : 크롭된 이미지의 넓이(확대/축소가 가능합니다). 위의 sWidth와 같으면 1:1 비율.
+    //             //     dHeight = Math.ceil(box.height);    // 9. dHeight : 크롭된 이미지의 높이(확대/축소가 가능합니다). 위의 sHidth와 같으면 1:1 비율.
+
+
+    //             const sx = boxSizeOrigin === 0 ? Math.ceil(box.x) : Math.ceil(box.x) - gap / 2,
+    //                 sy = boxSizeOrigin === 0 ? Math.ceil(box.y) - gap / 2 : Math.ceil(box.y),
+    //                 sWidth = boxSize,
+    //                 sHeight = boxSize,
+    //                 dx = 0,
+    //                 dy = 0,
+    //                 dWidth = boxSize,
+    //                 dHeight = boxSize;
+
+    //             cropCanvas.width = sWidth;
+    //             cropCanvas.height = sHeight;
+
+
+
+    //             var ctx = cropCanvas.getContext("2d");
+
+    //             img.onload = async function () {
+
+    //                 await ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+    //                 fileUploadImage.src = cropCanvas.toDataURL("image/jpeg");
+    //                 /***********얘네를 어디다가 놔둬야 할까....********* */
+    //                 TMinit().then(() => {
+    //                     predict();
+    //                 });
+    //                 /***********얘네를 어디다가 놔둬야 할까....********* */
+    //             }
+    //         }
+    //         else if (detections.length === 0) {
+    //             console.log("얼굴이 없습니다ㅜㅜ")
+    //             resultTitle.classList.remove('hidden')
+    //             resultTitle.innerHTML='사진에서 얼굴을 찾을 수 없습니다ㅜㅜ'
+    //         }
+    //         else if (detections.length > 1) {
+    //             console.log("얼굴이 너무 많아엽!! 한명만 찍어주세요!")
+    //             resultTitle.classList.remove('hidden')
+    //             resultTitle.innerHTML='사진에 얼굴이 너무 많습니다.<br>한 명의 얼굴만 등록해주세요!'
+    //         }
+    //     }
+    //     else {
+    //         removeUpload();
+    //     }
+    // })
 
 }
 async function TMinit() {
-    console.log("start TMinit")
     const modelURL = URL + 'model.json';
     const metadataURL = URL + 'metadata.json';
     loadingPercent.innerHTML = 'Loading...(3/5)'
@@ -131,9 +277,9 @@ async function TMinit() {
     // Note: the pose library adds "tmImage" object to your window (window.tmImage)
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
-    
+
     // append elements to the DOM
-    
+
     loadingPercent.innerHTML = 'Loading...(4/5)'
     for (let i = 0; i < maxPredictions; i++) {
         // and class labels
@@ -146,7 +292,7 @@ async function TMinit() {
 async function predict() {
     loadingPercent.innerHTML = 'Loading...(5/5)'
     // var imgSource = document.getElementById('face_image');
-    grayImg =  fileUploadImage.cloneNode(true);
+    grayImg = fileUploadImage.cloneNode(true);
     grayImg.classList.add('grayscale')
     // fileUploadContent.appendChild(grayImg);
     // console.log(grayImg);
@@ -154,22 +300,65 @@ async function predict() {
     // const prediction = await model.predict(imgSource, false);
     const prediction = await model.predict(grayImg, false);
     prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
-    console.log("prediction is",prediction[0].className);
-    let tempMessage, tempImg;
+    console.log("prediction is", prediction[0].className);
 
-    
-    resultMessage.innerHTML = prediction[0].className
-    resultImage.src = tempImg;
+
+
+    resultTitle.innerHTML = prediction[0].className
+
     spinnerContainer.classList.add("hidden");
     resultImage.classList.remove("hidden");
+    processImgOrigin[0].classList.remove("hidden");
+    processImgResult[0].classList.remove("hidden");
+    processImgOrigin[1].classList.remove("hidden");
+    processImgResult[1].classList.remove("hidden");
     shareContainer01.classList.remove("hidden");
 
+    switch (prediction[0].className) {
+        case "RM":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-rm.jpg";
+                        resultImage.src = "img/Face_RM.jpg"   
+            break;
+        case "뷔":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-v.jpg";
+                        resultImage.src = "img/Face_뷔.jpg"   
+            break;
+        case "슈가":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-suga.jpg";
+                        resultImage.src = "img/Face_슈가.jpg"   
+            break;
+        case "정국":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jk.jpg";
+            resultImage.src = "img/Face_정국.jpg"   
+            break;
+        case "제이홉":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jhope.jpg";
+            resultImage.src = "img/Face_제이홉.jpg"   
+            break;
+        case "지민":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jimin.jpg";
+            resultImage.src = "img/Face_지민.jpg"     
+            break;
+        case "진":
+            // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jin.jpg";
+            resultImage.src = "img/Face_진.jpg"   
+            resultMessage.innerHTML = "어디를 가든 비주얼을 담당하시는군요!<br>유후~"
+            break;
+    }
 
-    
+    processImgOrigin[0].src = fileUploadImage.src;
+    processImgResult[0].src = resultImage.src;
+    processImgOrigin[1].src = fileUploadImage.src;
+    processImgResult[1].src = resultImage.src;
+    processImgOrigin[0].style.opacity = 1.5;
+    processImgResult[0].style.opacity = 0.4;
+    processImgOrigin[1].style.opacity = 0.6;
+    processImgResult[1].style.opacity = 0.6
+
     let etcName = "그 외 : ";
     let cntClass = 0;
     for (let i = 0; i < maxPredictions; i++) {
-        
+
         percentOfResult = Math.floor(Number(prediction[i].probability.toFixed(2)) * 100 * 10) / 10;
 
         if (percentOfResult > 10) {
@@ -177,6 +366,7 @@ async function predict() {
             labelContainer.childNodes[i].classList.add('d-flex');
             labelContainer.childNodes[i].classList.add('align-items-center');
             labelContainer.childNodes[i].classList.add('justify-content-end');
+            labelContainer.childNodes[i].classList.add('label');
             labelContainer.childNodes[i].appendChild(document.createElement('div')); // 이름 
             labelContainer.childNodes[i].appendChild(document.createElement('div')); // 띄워쓰기
             labelContainer.childNodes[i].appendChild(document.createElement('div')); // 퍼센트
@@ -200,19 +390,24 @@ async function predict() {
         }
     }
 
-    
-    console.log(etcName)
     etcName = etcName.substr(0, etcName.length - 2);
-    console.log(`after slice ${etcName}`)
     labelContainer.childNodes[cntClass].innerHTML = etcName
 
 }
 
 function removeUpload() {
+    console.log("start remove")
+
     fileUploadContent.classList.add("hidden");
     imageUploadWrap.classList.remove("hidden");
-    resultMessage.innerHTML = '';
+    resultTitle.innerHTML = '';
+    resultMessage.innerHTML ='';
     fileUploadImage.src = "";
+    resultImage.src="";
+    processImgOrigin[0].src = "";
+    processImgResult[0].src = "";
+    processImgOrigin[1].src = "";
+    processImgResult[1].src = "";
 
     if (labelContainer.childNodes.length !== 0) {
         while (labelContainer.childNodes[0]) {
@@ -220,9 +415,9 @@ function removeUpload() {
         }
     }
 }
-function changeYear(e){
+function changeYear(e) {
 
-    switch(e.target.selectedIndex){
+    switch (e.target.selectedIndex) {
         case 0:
             console.log(e.target.options[e.target.selectedIndex].text)
             break;
@@ -232,7 +427,7 @@ function changeYear(e){
         case 2:
             console.log(e.target.options[e.target.selectedIndex].text)
             break;
-            
+
     }
 
 }
@@ -245,9 +440,15 @@ function init() {
     imageUploadWrap.addEventListener('dragleave', function () {
         imageUploadWrap.classList.remove('image-dropping');
     });
+
     removeBtn.addEventListener('click', removeUpload);
 
-    // TMinit();
+    TMinit();
+    
+    imageUpload.addEventListener('change',()=>{
+        console.log("start re upload")
+        faceDetect();
+    });
     //selectYear.addEventListener('change',changeYear);
 
 
