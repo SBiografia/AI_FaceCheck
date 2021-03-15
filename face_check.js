@@ -75,8 +75,8 @@ async function faceDetect(){
             
 
             image = await faceapi.bufferToImage(imageUpload.files[0])
-            // const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
-            const detections = await faceapi.detectAllFaces(image,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();//.withFaceDescriptors()
+            const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
+            // const detections = await faceapi.detectAllFaces(image,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();//.withFaceDescriptors()
             loadingPercent.innerHTML = 'Loading...(2/5)'
             fileUploadContent.classList.remove("hidden");
 
@@ -395,7 +395,7 @@ async function predict() {
 
 
             labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;// 이름 
-            labelContainer.childNodes[i].childNodes[0].style.width = "10vw"
+            labelContainer.childNodes[i].childNodes[0].style.width = "12vw"
             labelContainer.childNodes[i].childNodes[1].innerHTML = '&nbsp:&nbsp';
             labelContainer.childNodes[i].childNodes[2].childNodes[0].style.width = `${percentOfResult}%`;
             labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuenow', percentOfResult);
