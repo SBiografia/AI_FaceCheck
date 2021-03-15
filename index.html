@@ -10,7 +10,7 @@
 	<meta name="title" content="닮은 연예인 찾기">
 	<meta name="subject" content="AI가 찾아주는 날 닮은 연예인! 날 닮은 연예인이 누구일지 찾아보세요.">
 	<meta name="keywords"
-		content="테스트, 인공지능 테스트, 얼굴상, 얼굴상 테스트, 나와 닮은 연예인, 2000년대 연예인, 2000년대 탑스타, 2000년대 스타, 00년대 스타, 날 닮은 톱스타, 연예인 찾기, AI 얼굴상">
+		content="테스트, 인공지능 테스트, 얼굴상, 얼굴상 테스트, 나와 닮은 연예인, 내가 닮은 BTS멤버, 날 닮은 톱스타, 연예인 찾기, AI 얼굴상">
 	<meta name="author" content="SBiografia">
 	<meta property="og:url" content="https://youlooklike.netlify.app/" />
 	<meta property="og:type" content="website" />
@@ -21,6 +21,7 @@
 
 
 	<script defer src="face-api.min.js"></script>
+
 	<!-- <script src="face-api.js"></script> -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script> -->
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js"></script>
@@ -38,7 +39,7 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
 	<!-- share icon -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+	<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"> -->
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-P8YWE7M2Z8"></script>
@@ -57,8 +58,7 @@
 		//console.log(Kakao.isInitialized()); 
 
 	</script>
-	<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script src="https://ads-partners.coupang.com/g.js"></script>
+	
 	<link rel="stylesheet" href="style.css" />
 
 </head>
@@ -193,6 +193,7 @@
 
 			<p class="result_title"></p>
 			<p class="result_message"></p>
+			<p class="result_chemi"></p>
 			<div id="label-container"></div>
 		
 			<!-- LODING 중일 때 SPINNER 빙글빙글 -->
@@ -289,7 +290,6 @@
 
 
 	<div class="adContainer">
-
 		<script>
 			new PartnersCoupang.G({ "id": 454814, "template": "carousel", "trackingCode": "AF7764685", "width": "100%", "height": "7%" });
 		</script>
@@ -300,7 +300,8 @@
 	<!-------------------------- 댓글 창 ------------------------->
 	<!--<div id="disqus_thread"></div>-->
 	<!-- 라이브리 시티 설치 코드 -->
-	<div id="lv-container" data-id="city" data-uid="MTAyMC81MjkyMS8yOTM5OA==">
+
+	<!-- <div id="lv-container" data-id="city" data-uid="MTAyMC81MjkyMS8yOTM5OA==">
 		<script type="text/javascript">
 			(function (d, s) {
 				var j, e = d.getElementsByTagName(s)[0];
@@ -314,7 +315,7 @@
 				e.parentNode.insertBefore(j, e);
 			})(document, 'script');
 		</script>
-	</div>
+	</div> -->
 	<!-- 시티 설치 코드 끝 -->
 
 
@@ -388,6 +389,7 @@
 	<script src="share.js"></script>
 	<script src="openPage.js"></script>
 	<script src="script/html2canvas.min.js"></script>
+	<script src="https://ads-partners.coupang.com/g.js"></script>
 	<script>
 		function captureResult(){
 			html2canvas(document.querySelector('.resultForCapture'), { allowTaint: true , scrollX:0, scrollY: -window.scrollY }).then(function(canvas){
@@ -429,17 +431,6 @@
 			]
 		});
 	</script>
-	<!-- Option 1: Bootstrap Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-		crossorigin="anonymous"></script>
-
-	<!-- 
-		Option 2: Separate Popper and Bootstrap JS 
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-	-->
-
 
 	<script>
 		//gender 버튼
@@ -457,8 +448,6 @@
 
 	</script>
 
-	<!-- Go to www.addthis.com/dashboard to customize your tools -->
-	<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script> -->
 </body>
 
 <!-- 	

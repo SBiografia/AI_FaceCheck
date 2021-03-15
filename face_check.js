@@ -19,6 +19,7 @@ const imageUpload = document.getElementById('file-upload-input')
 const labelContainer = document.getElementById('label-container')
 const resultTitle = document.querySelector('.result_title'),
     resultMessage = document.querySelector('.result_message'),
+    resultChemi = document.querySelector('.result_chemi'),
     resultImage = document.querySelector('.result_image'),
     spinnerContainer = document.querySelector('.spinnerContainer'),
     shareContainer01 = document.querySelector('.shareContainer01');
@@ -32,7 +33,7 @@ const selectYear = document.querySelector('.selectYear');
 const     processImgOrigin = document.querySelectorAll('.processImgOrigin'),
         processImgResult = document.querySelectorAll('.processImgResult');
 
-
+let firstCheck = 0;
 let model, maxPredictions;
 const MODEL_URL = 'models/'
 /*****************
@@ -41,11 +42,13 @@ const MODEL_URL = 'models/'
  *
  *******************/
 
-let ttImg = document.getElementById('resizeFace');
 
 Promise.all([
     // faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+    
     faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+    // faceapi.nets.tinyYolov2.loadFromUri(MODEL_URL),
     faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL)
 ]).then(startFaceDetect)
 
@@ -72,7 +75,8 @@ async function faceDetect(){
             
 
             image = await faceapi.bufferToImage(imageUpload.files[0])
-            const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
+            // const detections = await faceapi.detectAllFaces(image).withFaceLandmarks();//.withFaceDescriptors()
+            const detections = await faceapi.detectAllFaces(image,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();//.withFaceDescriptors()
             loadingPercent.innerHTML = 'Loading...(2/5)'
             fileUploadContent.classList.remove("hidden");
 
@@ -156,7 +160,7 @@ async function faceDetect(){
 
 async function startFaceDetect() {
     
-    
+    console.log('start face detect')
     // document.body.append('ready to face')
     document.querySelector('.uploadMessage').innerHTML = "드래그 & 드롭으로 파일을 옮기거나<br>클릭해서 이미지를 선택해주세요!";
 
@@ -319,36 +323,43 @@ async function predict() {
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-rm.jpg";
                         resultImage.src = "img/Face_RM.jpg"   
                         resultMessage.innerHTML = "(리더/메인래퍼, 1994.09.12)<br>자신감 넘치는 표정과 개성 강한 얼굴은 당신을 빛나게 하는군요!<br>웃는 모습이 매력적인 얼굴에 보조개는 사랑입니다.<br><br>MBTI : INFP 잔다르크 형"
+                        resultChemi.innerHTML = "서로서로 챙겨주게 되는 멤버는? 제이홉"
             break;
         case "뷔":
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-v.jpg";
                         resultImage.src = "img/Face_뷔.jpg"  
                         resultMessage.innerHTML = "(서브보컬, 1995.12.30)<br>어느 모임에서나 비주얼 선두그룹 멤버시군요!<br>섹시하고 화려한 외모로 동서양의 매력을 다 갖춘 얼굴입니다.<br>무표정일 때는 조금 세보일수도 있는 인상이지만 웃으면 순하고 귀여운 공격력 0인 인상이 매력적이에요.<br><br>MBTI : ENFP 스파크형" 
+                        resultChemi.innerHTML = "의외의 최강 케미를 보여주는 멤버는? 슈가"
             break;
         case "슈가":
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-suga.jpg";
                         resultImage.src = "img/Face_슈가.jpg"   
                         resultMessage.innerHTML = "(리드래퍼, 1993.03.09)<br>어느 모임에서나 귀여움을 독차지하는 외모시군요!<br>동글동글한 얼굴에 세모난 눈매가 매력적인 얼굴입니다. <br> 귀여운 외모와는 상반되게 츤츤되며 무뚝뚝하면서도 다정한 면모가 많습니다.<br><br>MBTI : INFP 잔다르크형"
+                        resultChemi.innerHTML = "의외의 최강 케미를 보여주는 멤버는? 뷔"
             break;
         case "정국":
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jk.jpg";
             resultImage.src = "img/Face_정국.jpg"   
             resultMessage.innerHTML = "(메인보컬/리드댄서/서브래퍼, 1997.09.01)<br>시간이 지날수록 성숙한 매력이 폭발하는 스타일이시군요!<br>동글동글한 얼굴형에 소년소년한 매력에서부터 단정하고 듬직한 매력이 있는 얼굴입니다.<br>선이 매끈하고, 크고 맑은 눈에 쌍꺼풀까지 있지만 뾰족한 눈매가 있어 느끼하지 않아요.<br><br>MBTI : INFP 잔다르크 형"
+            resultChemi.innerHTML = "함께하면 최강의 웃음 버튼 조합인 멤버는? 진, 지민"
             break;
         case "제이홉":
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jhope.jpg";
             resultImage.src = "img/Face_제이홉.jpg"  
             resultMessage.innerHTML = "(메인댄서/서브래퍼, 1994.02.18)<br>분위기메이커에 애교라는 단어가 잘 어울리는 분이시군요!<br>매력적인 쌍꺼풀과 함께 선이 부드럽고 선한 인상의 고운 얼굴입니다.<br>친화력이 좋아 사람들과 잘 섞이며 적극적이고 에너지가 넘치며, 개구진 인상을 가진 얼굴입니다.<br><br>MBTI : ESFJ 친선도모형" 
+            resultChemi.innerHTML = "서로서로 챙겨주게 되는 멤버는? RM"
             break;
         case "지민":
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jimin.jpg";
             resultImage.src = "img/Face_지민.jpg"   
             resultMessage.innerHTML = "(메인댄서/리드보컬, 1995.10.13)<br>눈웃음으로 주변 사람들을 녹여버리는 외모를 가지셨군요!<br>샤프한 외모와 귀여운 매력을 동시에 가지고 있는 얼굴입니다.<br>두툼한 눈두덩이에서 나오는 매력적인 눈웃음은 주변 사람들을 모두 홀리게 하는 매력이 있네요. <br>MBTI : ENFJ 언변 능숙형"  
+            resultChemi.innerHTML = "함께하면 최강의 웃음 버튼 조합인 멤버는? 진, 정국"
             break;
         case "진":
             // resultImage.src = "https://ibighit.com/bts/images/bts/profile/member-jin.jpg";
             resultImage.src = "img/Face_진.jpg"   
             resultMessage.innerHTML = "(서브보컬, 1992.12.04)<br>어디를 가든 비주얼을 담당하시는군요!<br>당신의 얼굴은 진과 같이 계란형 얼굴이 대칭적이고 황금비율이 딱 맞는 얼굴입니다.<br>고급스러운 분위기를 지닌 도시적이고 차분한 느낌을 주며, 다정다감하고 선해 보이는 호감형 얼굴입니다.<br><br>MBTI : INTP 아이디어 뱅크형"
+            resultChemi.innerHTML = "함께하면 최강의 웃음 버튼 조합인 멤버는? 정국, 지민"
             break;
     }
 
@@ -454,10 +465,14 @@ function init() {
 
     TMinit();
     
-    imageUpload.addEventListener('change',()=>{
-        console.log("start re upload")
-        faceDetect();
-    });
+    // imageUpload.addEventListener('change',()=>{
+        
+    //     if(firstCheck !== 0){
+    //         console.log("start re upload")
+    //         faceDetect();
+    //     }
+        
+    // });
     //selectYear.addEventListener('change',changeYear);
 
 
