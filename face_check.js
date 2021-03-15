@@ -356,6 +356,7 @@ async function predict() {
     processImgResult[1].style.opacity = 0.6
 
     let etcName = "그 외 : ";
+    let etcNum = 0;
     let cntClass = 0;
     for (let i = 0; i < maxPredictions; i++) {
 
@@ -363,10 +364,7 @@ async function predict() {
 
         if (percentOfResult > 10) {
             cntClass = cntClass + 1;
-            labelContainer.childNodes[i].classList.add('d-flex');
-            labelContainer.childNodes[i].classList.add('align-items-center');
-            labelContainer.childNodes[i].classList.add('justify-content-end');
-            labelContainer.childNodes[i].classList.add('label');
+            labelContainer.childNodes[i].classList.add('d-flex','align-items-center','justify-content-end','label');
             labelContainer.childNodes[i].appendChild(document.createElement('div')); // 이름 
             labelContainer.childNodes[i].appendChild(document.createElement('div')); // 띄워쓰기
             labelContainer.childNodes[i].appendChild(document.createElement('div')); // 퍼센트
@@ -379,19 +377,24 @@ async function predict() {
             labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuemax', '100');
 
 
-            labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;
+            labelContainer.childNodes[i].childNodes[0].innerHTML = prediction[i].className;// 이름 
+            labelContainer.childNodes[i].childNodes[0].style.width = "10vw"
             labelContainer.childNodes[i].childNodes[1].innerHTML = '&nbsp:&nbsp';
             labelContainer.childNodes[i].childNodes[2].childNodes[0].style.width = `${percentOfResult}%`;
             labelContainer.childNodes[i].childNodes[2].childNodes[0].setAttribute('aria-valuenow', percentOfResult);
             labelContainer.childNodes[i].childNodes[2].childNodes[0].innerHTML = String(percentOfResult) + '%';
         }
         else if (percentOfResult > 0) {
+            etcNum = etcNum +1;
             etcName = etcName + `${prediction[i].className}(${percentOfResult}%), `;
         }
     }
-
-    etcName = etcName.substr(0, etcName.length - 2);
-    labelContainer.childNodes[cntClass].innerHTML = etcName
+    if(etcNum !== 0){
+        etcName = etcName.substr(0, etcName.length - 2);
+        labelContainer.childNodes[cntClass].classList.add('etcName', 'd-flex')
+        labelContainer.childNodes[cntClass].innerHTML = etcName
+    }
+    
 
 }
 

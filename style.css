@@ -27,16 +27,26 @@ body {
   margin : 0 auto;
   
 }
+.heartContainer{
+  position : absolute;
+  left : 50vw;
+  margin-left : -65px;
+  top : 60vh;
+  z-index : 99;
+}
 .heart {
   font-size: 150px;
   color: #e00;
   animation: beat .4s infinite alternate;
   transform-origin: center;
   position : absolute;
-  z-index : 99;
-  left : 50vw;
-  margin-left : -65px;
-  top:60vh;
+}
+.heartClick{
+  font-size : 2rem;
+  position: absolute;
+  color : white;
+  left : 45px;
+  top : 75px;
 }
 
 /* Heart beat animation */
@@ -210,12 +220,13 @@ select::-ms-expand {
   padding: 5px;
 }
 .result_title{
-  margin-top: 20px;
+  margin-top: 2vh;
   font-size : 3rem;
   font-weight : bold;
 }
 .result_message{
   font-size: 2rem;
+  margin-top : 1vh;
 }
 .processImgContainer{
   display:inline-block;
@@ -240,6 +251,7 @@ select::-ms-expand {
   outline: none;
   text-transform: uppercase;
   font-weight: 700;
+  font-size : 1rem;
 }
 
 .remove-image:hover {
@@ -442,6 +454,7 @@ select::-ms-expand {
 .shareContainer01 {
   box-sizing: border-box;
   font-family: -apple-system,BlinkMacSystemFont,San Francisco,Helvetica Neue,Helvetica,Ubuntu,Roboto,Noto,Segoe UI,Arial,sans-serif;
+  margin-top : 4vh;
 }
 
 .shareContainer01 *, 
@@ -471,6 +484,7 @@ select::-ms-expand {
 }
 
 .shareContainer01 button, .button {
+  min-width: 24vw;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -479,7 +493,7 @@ select::-ms-expand {
   padding-bottom: 8px;
   color: #777;
   text-align: center;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: 2px;
@@ -494,14 +508,16 @@ select::-ms-expand {
 .shareContainer01 button:hover, .shareContainer01 .button:hover {
   border-color: #cdd;
 }
+.shareContainer01 .share-button{
+  margin-right: 1.2vw;
+}
 
-.shareContainer01 .share-button {
+.shareContainer01 .share-button,
+.shareContainer01 .capture-button {
   padding-left: 30px;
   padding-right: 30px;
 }
-.kakao svg{
-  
-}
+
 .kakao .font{
   z-index : 1;
   position : absolute;
@@ -567,7 +583,7 @@ select::-ms-expand {
 
 #label-container{
 	max-width : 70vw;
-	margin : 0 10vw 0 auto;
+	margin : 0 16vw 0 auto;
   font-size: 2rem;
 }
 #label-container .progress{
@@ -577,6 +593,9 @@ select::-ms-expand {
 #label-container .progress-bar{
 	font-size: 2rem;
 }
+#label-container .etcName{
+  margin-left:9.5vw;
+}
 .label{
   width: 60vw;
 }
@@ -584,7 +603,7 @@ select::-ms-expand {
 
 @media screen and (max-width : 600px){
 	html,body{
-		font-size : 10px;
+		font-size : 12px;
 	}
 	.navbar{
 		width : 100%;

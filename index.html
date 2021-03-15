@@ -74,7 +74,10 @@
 
 		<img class="welcomeImg" src="img/BG_BTS01.jpg">
 
-		<div class="heart">&#x2665;</div>
+		<div class="heartContainer">
+			<div class="heart">&#x2665;</div>
+			<div class="heart heartClick">click</div>
+		</div>
 
 		<div class="adContainer ad_bottom">
 			<ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-89Le9LFSWQdcZanW" data-ad-width="320"
@@ -86,7 +89,7 @@
 		
 	</div>
 
-
+	<div class="main hidden">
 	<!-- NAV BAR from bootstrap -->
 	<div class="adContainer add_top">
 		<ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-BRkISGbh1P6FxjRM" data-ad-width="100vw"
@@ -130,6 +133,7 @@
 		</div>
 	</nav>
 
+	<div class="resultForCapture">
 	<section class="section d-flex flex-column justify-content-center align-items-center">
 		<div class="titleContainer d-flex flex-column justify-content-center align-items-center">
 			<div class="d-flex justify-content-center align-items-center">
@@ -172,6 +176,7 @@
 			</div>
 		</div>
 		<div class="file-upload-content hidden">
+			
 			<div class="uploadImgContainer d-flex">
 				<img class="file-upload-image" id="face_image" src="#"/>
 				<div class="processImgContainer">
@@ -188,6 +193,7 @@
 			<p class="result_title"></p>
 			<p class="result_message"></p>
 			<div id="label-container"></div>
+		
 			<!-- LODING 중일 때 SPINNER 빙글빙글 -->
 			<div class="spinnerContainer">
 				<div class="d-flex flex-column justify-content-center align-items-center">
@@ -254,8 +260,12 @@
 					</svg>
 					<span>공유하기</span>
 				</button>
-
-
+				<button class="capture-button" type="button" title="Caputre Result" onclick="captureResult()">
+					<svg>
+						<use href="#save-icon"></use>
+					</svg>
+					<span>결과 저장하기</span>
+				</button> 
 			</div>
 
 
@@ -274,6 +284,8 @@
 			</div>
 		</div>
 	</div>
+
+</div>
 	<div class="adContainer">
 
 		<script>
@@ -317,6 +329,7 @@
 		</div>
 	</section>
 
+</div>
 	<svg class="hidden" xmlns="http://www.w3.org/2000/svg">
 		<defs>
 			<symbol id="kakaotalk" viewBox="0 0 1792 1664" fill="#FEE500" stroke="#FEE500" stroke-width="2"
@@ -343,6 +356,14 @@
 				<polyline points="16 6 12 2 8 6"></polyline>
 				<line x1="12" y1="2" x2="12" y2="15"></line>
 			</symbol>
+
+			<symbol id="save-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+			stroke-linecap="round" stroke-linejoin="round" class="feather feather-share">
+			<path d="M3 12v8a2 2 2 0 0 2 2h14a2 2 0 0 0 2-2v-8"></path>
+			<polyline points="16 12 12 17 8 12"></polyline>
+			<line x1="12" y1="2" x2="12" y2="15"></line>
+		</symbol>
+			
 			<symbol id="facebook" viewBox="0 0 24 24" fill="#3b5998" stroke="#3b5998" stroke-width="2"
 				stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook">
 				<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
@@ -364,14 +385,26 @@
 
 	<script src="share.js"></script>
 	<script src="openPage.js"></script>
+	<script src="script/html2canvas.min.js"></script>
+	<script>
+		function captureResult(){
+			html2canvas(document.querySelector('.resultForCapture')).then(function(canvas){
+				var a = document.createElement('a');
+				a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg","image/octet-stream");
+				a.download = 'BTS.jpg'
+				a.click();
+			})
+		}
+	</script>
+
 
 	<script type="text/javascript">
 		Kakao.Link.createDefaultButton({
 			container: '#kakao-link',
 			objectType: 'feed',
 			content: {
-				title: '닮은 연예인 찾기',
-				description: '내가 닮은 2000년대 연예인은 과연 누구?!',
+				title: '닮은 연예인 찾기 - BTS',
+				description: '내가 닮은 BTS멤버는 과연 누구?!',
 				imageUrl:
 					'https://images.unsplash.com/photo-1514582086679-4024becf927e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
 				link: {
@@ -420,34 +453,7 @@
 
 		})
 
-
-
-
 	</script>
-
-	<script>
-		/**
-		 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-		 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-		/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-		/*
-				(function () {
-					// DON'T EDIT BELOW THIS LINE
-					var d = document,
-						s = d.createElement('script');
-					s.src = 'https://sbiografia.disqus.com/embed.js';
-					s.setAttribute('data-timestamp', +new Date());
-					(d.head || d.body).appendChild(s);
-				})();
-				*/
-	</script>
-
-	<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
 
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6037464275b7faa9"></script> -->
