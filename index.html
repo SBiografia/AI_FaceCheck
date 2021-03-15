@@ -165,7 +165,7 @@
 	</section>
 
 
-	<div class="resultForCapture">
+	
 	<div class="file-upload">
 		<div class="image-upload-wrap">
 			<!---  input에 들어오면  onchange="readURL(this);" 이걸 실행시켜주는건데 일단 facedetect를 위해 빼줌 -->
@@ -175,6 +175,7 @@
 				<h3 class="uploadMessage">누굴 닮고 싶은지 3초만 생각하며 기다려주세요. <br> AI 머신 준비 중!!</h3>
 			</div>
 		</div>
+		<div class="resultForCapture">
 		<div class="file-upload-content hidden">
 			
 			<div class="uploadImgContainer d-flex">
@@ -284,8 +285,9 @@
 			</div>
 		</div>
 	</div>
+	</div>
 
-</div>
+
 	<div class="adContainer">
 
 		<script>
@@ -388,7 +390,7 @@
 	<script src="script/html2canvas.min.js"></script>
 	<script>
 		function captureResult(){
-			html2canvas(document.querySelector('.resultForCapture')).then(function(canvas){
+			html2canvas(document.querySelector('.resultForCapture'), { allowTaint: true , scrollX:0, scrollY: -window.scrollY }).then(function(canvas){
 				var a = document.createElement('a');
 				a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg","image/octet-stream");
 				a.download = 'BTS.jpg'

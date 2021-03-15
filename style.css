@@ -225,7 +225,7 @@ select::-ms-expand {
   font-weight : bold;
 }
 .result_message{
-  font-size: 2rem;
+  font-size: 1rem;
   margin-top : 1vh;
 }
 .processImgContainer{
